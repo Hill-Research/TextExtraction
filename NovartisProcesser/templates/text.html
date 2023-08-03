@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text</title>
+</head>
+<style>
+    .result{
+        border : 1px solid #ddd;
+        margin : 15px;
+        display : inline-block;
+        font-size : 10px;
+    };
+</style>
+<body>
+    <h2>
+        <p style="text-align:center" font size="1">Clinical Text Extraction System</p>
+    </h2>
+    <form>
+        <p style="text-align:center">
+            Please type criteria text:</br>
+            <textarea id="text" cols=100 rows=12></textarea><br />
+        </p>
+        <center>
+            <input type="button" id="submit" value="Submit" /><br/>
+            <div id="extraction_result" class="result"></div><br/>
+            <div id="normalization_result" class="result"></div><br/>
+            <div id="generation_result" class="result"></div>
+        </center>
+    </form>
+    <script src="https://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script>
+        $.ajaxSetup({
+            data : {csrfmiddlewaretoken : '{{ csrf_token }}'}
+        })
+    </script>
+    <script>
+        function extraction(){
+            $("#sumbit").attr("disabled","true");
+            $('#extraction_result').html('Waiting for extraction result...');
+            $.ajax({
+                url : '/text/extraction/',
+                type : 'POST',
+                dataType : 'text',
+                data : {
+                    'text' : $("#text").val(),
+                },
+                success : function(data) {
+                    $('#extraction_result').empty();
+                    data = JSON.parse(data);
+                    head = data.head;
+                    body = data.body;
+                    table = "<center><p>Extracted items are:</p><br/><table border='1px solid #ccc' style='text-algin: center'><thead><tr>";
+                    $.each(head, function(i, item){
+                        table = table + "<td>" + item + "</td>";
+                    });
+                    table = table + "</tr></thead><tbody>";
+                    
+                    $.each(body, function(key, item){
+                        table = table + "<tr><td>" + key + "</td><td>" + item + "</td><tr>";
+                    });
+                    table = table + "</tbody></table></center>";
+                    $('#extraction_result').html(table);
+                    normalization();
+                }
+            })
+        };
+        
+        function normalization(){
+            $('#normalization_result').html('Waiting for normalization result...');
+            $.ajax({
+                url : '/text/normalization/',
+                type : 'POST',
+                dataType : 'text',
+                success : function(data) {
+                    $('#normalization_result').empty();
+                    data = JSON.parse(data);
+                    head = data.head;
+                    body = data.body;
+                    table = "<center><p>Normalized items are:</p><br/><table border='1px solid #ccc' style='text-algin: center'><thead><tr>";
+                    $.each(head, function(i, item){
+                        table = table + "<td>" + item + "</td>";
+                    });
+                    table = table + "</tr></thead><tbody>";
+                    
+                    $.each(body, function(i, item){
+                        table = table + "<tr>"
+                        $.each(item, function(key, value){
+                            table = table + "<td>" + JSON.stringify(value) + "</td>";
+                        });
+                        table = table + "</tr>";
+                    });
+                    table = table + "</tbody></table></center>"
+                    $('#normalization_result').html(table);
+                    generation();
+                }
+            });
+        };
+        
+        function generation(){
+            $('#generation_result').html('Waiting for generation result...');
+            $.ajax({
+                url : '/text/generation/',
+                type : 'POST',
+                dataType : 'text',
+                success : function(data) {
+                    $('#generation_result').empty();
+                    data = JSON.parse(data);
+                    head = data.head;
+                    body = data.body;
+                    table = "<center><p>SQL sequences are:</p><br/><table border='1px solid #ccc' style='text-algin: center'><thead><tr>";
+                    $.each(head, function(i, item){
+                        table = table + "<td>" + item + "</td>";
+                    });
+                    table = table + "</tr></thead><tbody>";
+                    
+                    $.each(body, function(i, item){
+                        table = table + "<tr>";
+                        $.each(item, function(key, value){
+                            table = table + "<td>" + JSON.stringify(value) + "</td>";
+                        });
+                        table = table + "</tr>"
+                    });
+                    table = table + "</tbody></table></center>"
+                    $('#generation_result').html(table);
+                    $("#sumbit").attr("disabled","false");
+                }
+            });
+        };
+        $("#submit").click(function(){
+            $('#extraction_result').empty();
+            $('#normalization_result').empty();
+            $('#generation_result').empty();
+            extraction();
+        });
+    </script>
+</body>
+</html>

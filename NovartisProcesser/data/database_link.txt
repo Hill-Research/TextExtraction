@@ -1,0 +1,12 @@
+Sex	f.00031.0.0
+Year	f.00034.0.0
+ANC	f.30140.0.0
+Platelets count	f.30080.0.0
+Platelet count	f.30080.0.0
+Hepatic total bilirubin count	f.30620.0.0
+Blood creatinine count	f.30650.0.0
+Blood urea nitrogen count	f.30630.0.0
+Albumin count	f.30600.0.0
+Differential blood count	f.30140.0.0
+Eosinophil direct count	f.30840.0.0
+Hemoglobin count	f.30020.0.0

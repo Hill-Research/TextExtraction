@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Selection</title>
+</head>
+<style>
+    .link{
+        border : 2.5px solid #ddd;
+        margin : 50px;
+        display : inline-block;
+        font-size : 20px;
+        width:200px;
+        height: 100px;
+    };
+</style>
+<body>
+    <h2>
+        <p style="text-align:center" font size="1">Welcome to Our Clinical Patient Selection System</p>
+    </h2>
+    <br/><br/>
+    <form>
+        <center>
+            <div id="all_link">
+                <p style="text-align:center" font size="1">Please Select an Application.</p>
+                <input type="button" class="link" id="text_link" value="Text" />
+                <input type="button" class="link" id="figure_link" value="Figure" />
+                <input type="button" class="link" id="csv_link" value="CSV"><br/>
+            </div>
+        </center>
+    </form>
+    <script src="https://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script>
+        $.ajaxSetup({
+            data : {csrfmiddlewaretoken : '{{ csrf_token }}'}
+        })
+    </script>
+    <script>
+        $("#text_link").click(function(){
+            current_html = $('#all_link').html();
+            $('#all_link').html('<h2>Please wait, system is initializing...</h2>');
+            location.href = '/text/';
+        });
+        $("#figure_link").click(function(){
+            current_html = $('#all_link').html();
+            $('#all_link').html('<h2>Please wait, system is initializing...</h2>');
+            location.href = '/figure/';
+        });
+        $("#csv_link").click(function(){
+            current_html = $('#all_link').html();
+            $('#all_link').html('<h2>Please wait, system is initializing...</h2>');
+            location.href = '/csv/';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+Life expectancy
+ANC	{'ULN': '1.5×109/L'}
+Platelets count	{'ULN' : '300 x109/L'}
+Platelet count {'ULN' : '300 x109/L'}
+Hepatic total bilirubin count	{'ULN' : '21 μmol/L'}
+Syndrome
+Renal eGFR	{'Formula' : '170*$Blood creatinine count$^{-0.999}*(2023-$Year$)^{-0.176}*$Blood urea nitrogen count$^{-0.170}*$Albumin count$*(1-0.258*$Sex$)'}
+Albumin count	{'ULN' : '10mg/L'}
+Differential blood count
+Eosinophil direct count
+Hemoglobin count
