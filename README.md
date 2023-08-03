@@ -19,4 +19,3 @@ Bio_clinicalBERT: https://huggingface.co/emilyalsentzer/Bio_ClinicalBERT
 ```
 python manage.py runserver 0.0.0.0:8000
 ```
-Operated pdf file will be stored in "result".
